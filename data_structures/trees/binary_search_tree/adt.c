@@ -82,6 +82,45 @@ treeNode* removeNode(treeNode* tree, int key) {
   return tree;
 }
 
+
+int leafCounter(treeNode* tree) {
+  if (tree == NULL) {
+    return 0;
+  } else if (tree->left == NULL && tree->right == NULL) {
+    return 1;
+  } else {
+    return leafCounter(tree->left) + leafCounter(tree->right);
+  }
+}
+
+int height(treeNode* tree) {
+  int heightLeft, heightRight;
+  if (tree == NULL) {
+    return 0;
+  } else {
+    heightLeft = height(tree->left);
+    heightRight = height(tree->right);
+    if (heightLeft < heightRight) {
+      return (heightRight + 1);
+    } else {
+      return (heightLeft + 1);
+    }
+  }
+}
+
+int balance(treeNode* tree) {
+  int heightLeft, heightRight;
+  if (tree != NULL) {
+    heightLeft = height(tree->left);
+    heightRight = height(tree->right);
+    return ((heightLeft - heightRight < 2) && (heightRight - heightLeft < 2) && balance(tree->left) && balance(tree->right));
+  } else {
+    return 1;
+   }
+}
+    
+
+
 void destroyTree(treeNode* tree) {
   if (tree != NULL) {
     destroyTree(tree->left);

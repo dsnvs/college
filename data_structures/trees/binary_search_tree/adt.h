@@ -28,5 +28,10 @@ treeNode* removeNode(treeNode* tree, int key);
 void destroyTree(treeNode* tree);
 // Destroy a tree and clear all the memory used by it.
 // Returns nothing.
+int height(treeNode* tree);
+
+int balance(treeNode* tree);
+
+int leafCounter(treeNode* tree);
 
 #endif
