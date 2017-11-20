@@ -7,9 +7,9 @@ void main(void) {
   int option, info, info2;
   do{
     do {
-      printf("Options: 1. Create a tree.\n2. Search a node.\n3. Insert root.\n4. Insert left.\n5. Insert right.\n6. Destroy tree.\n7. Quit!\n");
+      printf("Options: 1. Create a tree.\n2. Search a node.\n3. Insert root.\n4. Insert left.\n5. Insert right.\n6. Remove leaf.\n7. Destroy tree.\n8. Quit!\n");
       scanf("%i", &option);
-    } while (option > 7 || option < 1);
+    } while (option > 8 || option < 1);
     switch(option) {
       case 1:
         tree = createTree();
@@ -36,8 +36,12 @@ void main(void) {
         insertRight(tree, info, info2);
         break;
       case 6:
+        scanf("%i", &info);
+        tree = removeLeaf(tree, info);
+        break;
+      case 7:
         destroyTree(tree);
         break;
     }
-  } while (option != 7);
+  } while (option != 8);
 };

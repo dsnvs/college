@@ -18,7 +18,7 @@ treeNode* searchNode(treeNode* tree, int info);
 
 treeNode* insertRoot(treeNode* tree, int info);
 // Inserts a node as the root of a tree if the tree is empty.
-// Returns 0 if success or 1 if the function fails, but modifies the tree.
+// Always returns a non-empty tree.
 
 int insertLeft(treeNode* tree, int newInfo, int parentInfo);
 // Inserts a node on the left side of a parent passed through argument.
@@ -32,4 +32,7 @@ void destroyTree(treeNode* tree);
 // Destroy a tree and clear all the memory used by it.
 // Returns nothing.
 
+treeNode* removeLeaf(treeNode* tree, int info);
+// Removes a leaf from a tree.
+// Returns a tree without the selected leaf. 
 #endif

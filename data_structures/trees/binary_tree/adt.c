@@ -105,3 +105,22 @@ void destroyTree(treeNode* tree) {
     free(tree);
   }
 }
+
+treeNode* removeLeaf(treeNode* tree, int info) {
+  treeNode* newTree;
+  if (tree != NULL) {
+    if (tree->info == info) {
+      if (tree->left == NULL && tree->right == NULL) {
+        free(tree);
+        return NULL;
+      } else {
+        return tree;
+      }
+    } else {
+      tree->left = removeLeaf(tree->left, info);
+      tree->right = removeLeaf(tree->right, info);
+    }
+  }
+  return tree;
+}
+

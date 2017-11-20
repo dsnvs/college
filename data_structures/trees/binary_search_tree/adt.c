@@ -6,96 +6,80 @@ treeNode* createTree(void) {
 }
 
 // Algorithm:
-// 1. If passed tree is empty, returns NULL and stop. Else:
-// 2. If the root of the tree have the value for which the algorithm is looking, returns the tree pointer. Else:
-// 3. Searchs (recursively) for the info starting by the left subtree of the tree passed through argument.
-//// 3.1 If the node is found, returns the pointer. Else:
-//// 3.2 Searchs the right subtree and returns the pointer if it founds the node. Else:
-//// 3.3 Returns NULL.
+// 1. If tree is not empty,
+//// 2. If key of the current node is greater than the key the algorithm is searching for,
+////// 3. Returns a call for this algorithm using the left-child of the current tree as an argument.
+//// 4. Else if the key of the current node is smaller than the key the algorithm is searching for,
+////// 5. Returns a call for this algorithm using the right-child of the current tree as an argument.
+// 6. Returns tree.
 
-
-treeNode* searchNode(treeNode* tree, int info) {
-  treeNode* left;
-  treeNode* right;
-  if (tree == NULL) {
-    printf("NULL");
-    return NULL;
-  } else if (tree->info == info) {
-    printf("INFO");
-    return tree;
-  } else {
-    printf("BRANCH");
-    left = searchNode(tree->left, info);
-    if (left != NULL) {
-      return left;
-    } else {
-      right = searchNode(tree->right, info);
-      if (right != NULL) {
-        return right;
-      } else {
-        return NULL;
-      }
+treeNode* searchNode(treeNode* tree, int key) {
+  if (tree != NULL) {
+    if (tree->key > key) {
+      printf("left\n");
+      return searchNode(tree->left, key);
+    } else if (tree->key < key) {
+      printf("right\n");
+      return searchNode(tree->right, key);
     }
   }
-}
-
-
-treeNode* insertRoot(treeNode* tree, int info) {
-  if (tree == NULL) {
-    tree = (treeNode*)malloc(sizeof(treeNode));
-    tree->info = info;
-    tree->left = NULL;
-    tree->right = NULL;
-  } 
   return tree;
 }
 
 // Algorithm:
-// 1. Searchs for a node with the same value passed through "parentInfo".
-// 2. If the value is found, check if the left subtree of that value is NULL.
-// 2.1 If yes,  creates a new node with "newInfo", assigns it as the left node of the subtree found and returns 0. Else:
-// 2.2 return 1.
+// 1. If tree is empty, insert key in tree.
+// 2. Else
+//// 3. If the key we're inserting is smaller than the current key,
+////// 4. Call this algorithm using the left-child of the current tree as an argument and assign the return to left-child.
+//// 5. Else if the key we're inserting is higher than the current key,
+////// 6. Call this algorithm using the right-child of the current tree as an argument and assign the return to right-child.
+// 7. Return tree.
 
-int insertLeft(treeNode* tree, int newInfo, int parentInfo) {
-  treeNode* parent;
-  parent = searchNode(tree, parentInfo);
-  if (parent != NULL) {
-    if (parent->left == NULL) {
-      parent->left = (treeNode*)malloc(sizeof(treeNode));
-      parent->left->info = newInfo;
-      parent->left->left = NULL;
-      parent->left->right = NULL;
-      return 0;
-    } else {
-      return 1;
-    }
+treeNode* insertNode(treeNode* tree, int key) {
+  if (tree == NULL) {
+    tree = (treeNode*)malloc(sizeof(treeNode));
+    tree->key = key;
+    tree->left = NULL;
+    tree->right = NULL;
   } else {
-    return 1;
+    if (tree->key > key) {
+      tree->left = insertNode(tree->left, key);
+    } else if (tree->key < key) {
+      tree->right = insertNode(tree->right, key);
+    }
   }
+    return tree;
 }
 
-// Algorithm:
-// 1. Searchs for a node with the same value passed through "parentInfo".
-// 2. If the value is found, check if the right subtree of that value is NULL.
-// 2.1 If yes,  creates a new node with "newInfo", assigns it as the right node of the subtree found and returns 0. Else:
-// 2.2 return 1.
-
-int insertRight(treeNode* tree, int newInfo, int parentInfo) {
-  treeNode* parent;
-  parent = searchNode(tree, parentInfo);
-  if (parent != NULL) {
-    if (parent->right == NULL) {
-      parent->right = (treeNode*)malloc(sizeof(treeNode));
-      parent->right->info = newInfo;
-      parent->right->left = NULL;
-      parent->right->right = NULL;
-      return 0;
+treeNode* removeNode(treeNode* tree, int key) {
+  treeNode* auxTree;
+  if (tree == NULL) {
+    return NULL;
+  } else if (tree->key != key) {
+    tree->left = removeNode(tree->left, key);
+    tree->right = removeNode(tree->right, key);
+  } else if (tree->key == key) {
+    if (tree->left == NULL && tree->right == NULL) {
+      free(tree);
+      return NULL;
+    } else if (tree->left == NULL || tree->right == NULL) {
+      if (tree->left == NULL) {
+        auxTree = tree->right;
+      } else {
+        auxTree = tree->left;
+      }
+      free(tree);
+      return auxTree;
     } else {
-      return 1;
+      auxTree = tree->right;
+      while (auxTree->left != NULL) {
+        auxTree = auxTree->left;
+      }
+      tree->key = auxTree->key;
+      tree->right = removeNode(tree->right, auxTree->key);
     }
-  } else {
-    return 1;
   }
+  return tree;
 }
 
 void destroyTree(treeNode* tree) {

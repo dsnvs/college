@@ -4,10 +4,10 @@
 void main(void) {
   treeNode* tree;
   treeNode* searched;
-  int option, info, info2;
+  int option, key;
   do{
     do {
-      printf("Options: 1. Create a tree.\n2. Search a node.\n3. Insert root.\n4. Insert left.\n5. Insert right.\n6. Destroy tree.\n7. Quit!\n");
+      printf("Options: 1. Create a tree.\n2. Search a node.\n3. Insert node.\n4. Remove node.\n5. Destroy tree.\n6. Quit!\n");
       scanf("%i", &option);
     } while (option > 7 || option < 1);
     switch(option) {
@@ -15,29 +15,24 @@ void main(void) {
         tree = createTree();
         break;
       case 2:
-        scanf("%i", &info);
-        searched = searchNode(tree, info);
+        scanf("%i", &key);
+        searched = searchNode(tree, key);
         if (searched != NULL) {
-          printf("%i\n", searched->info);
+          printf("%i\n", searched->key);
         }
         break;
       case 3:
-        scanf("%i", &info);
-        tree = insertRoot(tree, info);
+        scanf("%i", &key);
+        tree = insertNode(tree, key);
         break;
       case 4:
-        scanf("%i", &info);
-        scanf("%i", &info2);
-        insertLeft(tree, info, info2);
+        scanf("%i", &key);
+        tree = removeNode(tree, key);
         break;
       case 5:
-        scanf("%i", &info);
-        scanf("%i", &info2);
-        insertRight(tree, info, info2);
-        break;
-      case 6:
-        destroyTree(tree);
-        break;
-    }
-  } while (option != 7);
+       destroyTree(tree);
+       tree = NULL;
+       break;
+   }
+  } while (option != 6);
 };
