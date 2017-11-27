@@ -41,9 +41,11 @@ treeNode* insertNode(treeNode* tree, int key) {
     tree->key = key;
     tree->left = NULL;
     tree->right = NULL;
+    tree->fb = 0;
   } else {
     if (tree->key > key) {
       tree->left = insertNode(tree->left, key);
+      switch (tree->fb)
     } else if (tree->key < key) {
       tree->right = insertNode(tree->right, key);
     }

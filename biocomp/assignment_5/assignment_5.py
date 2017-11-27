@@ -62,8 +62,7 @@ def generating_matrix(sequence_names, sequences):
 
 
 def write_matrix(sequence_names, matrix, filename):
-    with open(filename + '.csv','a') as output:
-        output.write(',')
+    with open(filename + '.txt' ,'a') as output:
         for sequence_name in sequence_names:
             output.write(',' + sequence_name)
         output.write('\n')

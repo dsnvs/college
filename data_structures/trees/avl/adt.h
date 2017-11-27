@@ -3,6 +3,7 @@
 
 typedef struct treeNode {
 	int key;
+  int fb;
 	struct treeNode* left;
 	struct treeNode* right;
 } treeNode;
