@@ -1,0 +1,17 @@
+1. salva uma cópia dos endereços de memória origem e destino para uso e modificação
+2. caso o endereço de memória destino - 1 tenha valor 32, esse endereço receberá o valor 0.
+razão: ter certeza de que, caso a memória esteja suja, dados anteriores não interfiram na construção da nova string.
+considerações: existem dois casos onde isso pode ser potencialmente danoso, caso o endereço destino seja 130,
+logo o endereço anterior seria 129, que não deve ser modificado, e no caso do endereço de destino ser imediatamente após a string
+de origem. 
+Em ambos os casos isso não é um problema pois o código testa se o endereço tem valor 32 (espaço), e caso 129 tenha valor 32,
+o endereço de memória destino vai ser no meio do programa da memória do "programa". o que causaria erro de qualquer forma.
+já no caso da string de destino ser posicionada imediatamente após a string de entrada,
+novamente não seria um problema visto que toda string termina com um valor nulo, logo, haveria um erro no programa de qualquer forma.
+3. loop que itera sobre cada um dos caracteres de origem até que encontre uma posição de memória com valor 00
+    esse loop vai inicialmente testar caso o caracter selecionado seja um dos caracteres especiais,
+    caso seja, ele vai verificar se na string de destino o caracter imediatamente anterior é espaço,
+    e se for espaço, ele vai reduzir o iterador da segunda string em um e não vai incluir o espaço.
+    senão, incluirá o espaço.
+    posterior a isso vai atualizar os iteradores incrementando em um o valor dos iteradores. e voltar para o início do loop.
+4. insere 00 na última posição de memória da string de destino.
